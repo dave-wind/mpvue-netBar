@@ -34,7 +34,7 @@ module.exports = {
     // console.log()
     'no-console': 0,
     // object {}
-    // 'object-curly-spacing': 0,
+    'object-curly-spacing': 0,
     // const isJedi = luke['jedi']; == > const isJedi = luke.jedi;
     'dot-notation': 0,
     // allow optionalDependencies
