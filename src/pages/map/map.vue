@@ -49,6 +49,7 @@
             wx.getUserInfo({
               success: (res) => {
                 this.userInfo = res.userInfo;
+                this.loadData();
               },
               fail: () => {
                 // 没权限的 页面
@@ -136,11 +137,9 @@
       },
     },
     created() {
-      // 调用应用实例的方法获取全局数据
       this.getUserInfo();
     },
     mounted() {
-      this.loadData();
     },
   };
 </script>

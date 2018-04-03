@@ -6,7 +6,7 @@
       </div>
       <div class="txt">没权限你 找个锤子网吧~</div>
       <div class="btn-wrap">
-        <button class="load" @click="resetGetpermis">重新获取权限</button>
+        <button class="load" type="warn" @click="resetGetpermis">重新获取权限</button>
       </div>
     </div>
   </div>
@@ -46,11 +46,10 @@
   .txt {
     width: 100%;
     text-align: center;
-    font-size: 16pt;
     font-weight: 500;
   }
   .btn-wrap {
-    width: 40vw;
+    width: 350rpx;
     margin-top: 50rpx;
     margin-left: auto;
     margin-right: auto;
