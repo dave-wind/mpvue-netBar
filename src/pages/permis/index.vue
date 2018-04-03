@@ -5,7 +5,9 @@
         <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
       </div>
       <div class="txt">没权限你 找个锤子网吧~</div>
-      <div class="load" @click="resetGetpermis">重新获取权限</div>
+      <div class="btn-wrap">
+        <button class="load" @click="resetGetpermis">重新获取权限</button>
+      </div>
     </div>
   </div>
 </template>
@@ -22,7 +24,6 @@
       loadData() {
       },
       resetGetpermis() {
-        console.log('233');
       },
     },
   };
@@ -47,5 +48,11 @@
     text-align: center;
     font-size: 16pt;
     font-weight: 500;
+  }
+  .btn-wrap {
+    width: 40vw;
+    margin-top: 50rpx;
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>
