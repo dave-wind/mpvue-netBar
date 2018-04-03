@@ -49,7 +49,10 @@
             wx.getUserInfo({
               success: (res) => {
                 this.userInfo = res.userInfo;
-                console.log(this.userInfo);
+              },
+              fail: () => {
+                // 没权限的 页面
+                wx.navigateTo({ url: '/pages/permis/index' });
               },
             });
           },
@@ -72,6 +75,9 @@
             this.destination = res.destination;
             this.briefAddr = res.briefAddr;
             this.searchNetWork();
+          },
+          fail: () => {
+            console.log(233);
           },
         });
       },

@@ -10,4 +10,11 @@ module.exports = [
       enablePullDownRefresh: true,
     },
   },
+  {
+    path: '/pages/permis/index',
+    config: {
+      navigationBarTitleText: '小宝带你找网咖',
+      enablePullDownRefresh: true,
+    },
+  },
 ];
