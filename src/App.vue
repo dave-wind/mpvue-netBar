@@ -10,7 +10,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .container {
   height: 100%;
@@ -28,4 +27,8 @@ export default {
   -webkit-transition: width 2s;
   -o-transition: width 2s;
 }
+</style>
+<!-- 公共css 引入 入口 App.vue-->
+<style type="text/scss" lang="scss">
+  @import "../static/scss/public.scss";
 </style>

@@ -1,0 +1,74 @@
+@mixin wh100 {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin clearfix {
+  &:after {
+    display: block;
+    clear: both;
+    content: '';
+    visibility: hidden;
+    height: 0;
+  }
+}
+
+@mixin textOverflow {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@mixin imgcenter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  height: auto;
+}
+
+@mixin centerPosition($w,$h) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: $w;
+  height: $h;
+  margin-left: -1*($w/2);
+  margin-top: -1*($h/2);
+}
+
+@mixin centerMargin($w,$h) {
+  width: $w;
+  height: $h;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// 宽高不固定元素 绝对居中
+@mixin positonCenter($top,$left) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+@mixin inputPlaceholder($color) {
+  input {
+    &::-webkit-input-placeholder {
+      color: $color;
+    }
+    &::-moz-placeholder {
+      color: $color;
+    }
+  }
+  input:-ms-input-placeholder {
+    color: $color;
+  }
+}

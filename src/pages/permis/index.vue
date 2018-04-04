@@ -6,7 +6,7 @@
       </div>
       <div class="txt">没权限你 找个锤子网吧~</div>
       <div class="btn-wrap">
-        <button class="load" type="warn" @click="resetGetpermis">重新获取权限</button>
+        <button type="bottom" @click="resetGetpermis">重新获取权限</button>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
     },
   };
 </script>
-<style scoped>
+<style scoped type="text/scss" lang="scss">
   .notLine {
     width: 100%;
     height: 60vh;
