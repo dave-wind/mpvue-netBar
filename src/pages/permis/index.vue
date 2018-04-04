@@ -15,6 +15,7 @@
   export default {
     data() {
       return {
+        userRefuse: null,
       };
     },
     mounted() {
@@ -22,6 +23,7 @@
     },
     methods: {
       loadData() {
+        this.userRefuse = this.$route.query.user;
       },
       resetGetpermis() {
       },
@@ -34,20 +36,24 @@
     height: 60vh;
     padding-top: 30vh;
   }
+
   .img-wrap {
     width: 100%;
     text-align: center;
     margin-bottom: 50rpx;
   }
-  .img-wrap  image{
+
+  .img-wrap image {
     width: 240rpx;
     height: 103rpx;
   }
+
   .txt {
     width: 100%;
     text-align: center;
     font-weight: 500;
   }
+
   .btn-wrap {
     width: 350rpx;
     margin-top: 50rpx;

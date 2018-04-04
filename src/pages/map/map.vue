@@ -19,6 +19,8 @@
 </template>
 
 <script>
+//  import Bus from '../../bus/index';
+
   const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
   const qqKey = 'XCEBZ-MEE3F-XAZJN-NKBX7-HXLTS-BIF6J';
   const QQMapWX = require('../../utils/map/qqmap-wx-jssdk.js');
@@ -41,21 +43,22 @@
         address: '',
       };
     },
+    created() {
+      this.getUserInfo();
+    },
+    mounted() {
+    },
     methods: {
       getUserInfo() {
         // 调用登录接口
-        wx.login({
-          success: () => {
-            wx.getUserInfo({
-              success: (res) => {
-                this.userInfo = res.userInfo;
-                this.loadData();
-              },
-              fail: () => {
-                // 没权限的 页面
-                wx.navigateTo({ url: '/pages/permis/index' });
-              },
-            });
+        wx.getUserInfo({
+          success: (res) => {
+            this.userInfo = res.userInfo;
+            this.loadData();
+          },
+          fail: () => {
+            // 没权限的 页面
+            wx.navigateTo({url: '/pages/permis/index?user=true'});
           },
         });
       },
@@ -64,8 +67,8 @@
         this.getLocation();
       },
       mapInitSDK() {
-        this.amapInstance = new amapFile.AMapWX({ key: gdKey });
-        this.qqMapSdk = new QQMapWX({ key: qqKey });
+        this.amapInstance = new amapFile.AMapWX({key: gdKey});
+        this.qqMapSdk = new QQMapWX({key: qqKey});
       },
       getLocation() {
         wx.getLocation({
@@ -78,7 +81,6 @@
             this.searchNetWork();
           },
           fail: () => {
-            console.log(233);
           },
         });
       },
@@ -128,18 +130,13 @@
         this.netWorkAddressById(e.mp.markerId);
       },
       netWorkAddressById(val) {
-        this.markers.forEach(({ id, name, address }) => {
+        this.markers.forEach(({id, name, address}) => {
           if (id === val) {
             this.netName = name;
             this.address = address;
           }
         });
       },
-    },
-    created() {
-      this.getUserInfo();
-    },
-    mounted() {
     },
   };
 </script>
