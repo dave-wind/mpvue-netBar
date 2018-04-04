@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="notLine">
+    <div class="notLine" v-show="permit">
       <div class="img-wrap">
         <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
       </div>
@@ -13,28 +13,54 @@
 </template>
 <script>
   export default {
+    props: ['permit'],
     data() {
       return {
         userRefuse: null,
       };
     },
-    mounted() {
-      this.loadData();
-    },
     methods: {
-      loadData() {
-        this.userRefuse = this.$route.query.user;
-      },
       resetGetpermis() {
+        wx.getSetting({
+          success: (res) => {
+            if (!res.authSetting['scope.userLocation']) {
+              this.openConfirm();
+            }
+          },
+        });
+      },
+      openConfirm() {
+        wx.showModal({
+          content: '检测到您没打开定位权限，是否去设置打开？',
+          confirmText: '确认',
+          showCancel: false,
+          success: (res) => {
+            console.log(res);
+            // 点击“确认”时打开设置页面
+            if (res.confirm) {
+              console.log('用户点击确认');
+              wx.openSetting({
+                success: () => {
+                  this.$emit('alertPermit');
+                },
+              });
+            }
+          },
+        });
       },
     },
   };
 </script>
 <style scoped type="text/scss" lang="scss">
   .notLine {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
-    height: 60vh;
+    height: 100vh;
     padding-top: 30vh;
+    z-index: 100;
+    background-color: #fff;
   }
 
   .img-wrap {

@@ -13,7 +13,7 @@ module.exports = [
   {
     path: '/pages/permis/index',
     config: {
-      navigationBarTitleText: '小宝带你找网咖',
+      navigationBarTitleText: '',
       enablePullDownRefresh: true,
     },
   },
