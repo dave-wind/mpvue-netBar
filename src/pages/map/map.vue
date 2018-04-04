@@ -15,16 +15,22 @@
         地址：{{address}}
       </div>
     </div>
+    <permission :permit="permit" @alertPermit="alertPermit"></permission>
   </div>
 </template>
 
 <script>
+  import Permission from '../permis/index';
+
   const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
   const qqKey = 'XCEBZ-MEE3F-XAZJN-NKBX7-HXLTS-BIF6J';
   const QQMapWX = require('../../utils/map/qqmap-wx-jssdk.js');
   const amapFile = require('../../utils/map/amap-wx.js');
 
   export default {
+    components: {
+      Permission,
+    },
     data() {
       return {
         userInfo: {},
@@ -34,38 +40,31 @@
         latitude: 0,
         markers: [],
         polyline: [],
-        onLine: true,
-        noAuth: true,
-        yesAuth: true,
         netName: '',
         address: '',
+        permit: false,
       };
+    },
+    mounted() {
+      this.getLocation();
     },
     methods: {
       getUserInfo() {
         // 调用登录接口
-        wx.login({
-          success: () => {
-            wx.getUserInfo({
-              success: (res) => {
-                this.userInfo = res.userInfo;
-                this.loadData();
-              },
-              fail: () => {
-                // 没权限的 页面
-                wx.navigateTo({ url: '/pages/permis/index' });
-              },
-            });
+        wx.getUserInfo({
+          success: (res) => {
+            this.userInfo = res.userInfo;
+            this.mapInitSDK();
+          },
+          complete: () => {
           },
         });
       },
-      loadData() {
-        this.mapInitSDK();
-        this.getLocation();
-      },
       mapInitSDK() {
-        this.amapInstance = new amapFile.AMapWX({ key: gdKey });
-        this.qqMapSdk = new QQMapWX({ key: qqKey });
+        console.log('init network');
+        this.amapInstance = new amapFile.AMapWX({key: gdKey});
+        this.qqMapSdk = new QQMapWX({key: qqKey});
+        this.searchNetWork();
       },
       getLocation() {
         wx.getLocation({
@@ -75,10 +74,11 @@
             this.latitude = res.latitude;
             this.destination = res.destination;
             this.briefAddr = res.briefAddr;
-            this.searchNetWork();
+            this.getUserInfo();
           },
           fail: () => {
-            console.log(233);
+            // 没权限的 页面
+            this.permit = true;
           },
         });
       },
@@ -92,8 +92,6 @@
           success: (res) => {
             // 关闭loading
             wx.hideLoading();
-            // 有可能是参数有问题或者是网络
-            this.onLine = true;
             // 根据返回的结果marker在地图上面
             const data = res.data;
             this.refactorMapArray(data);
@@ -101,10 +99,6 @@
           fail: () => {
             // 关闭loading
             wx.hideLoading();
-            // 有可能是参数有问题或者是网络
-            this.onLine = false;
-            this.noAuth = false;
-            this.yesAuth = true;
           },
         });
       },
@@ -128,18 +122,18 @@
         this.netWorkAddressById(e.mp.markerId);
       },
       netWorkAddressById(val) {
-        this.markers.forEach(({ id, name, address }) => {
+        this.markers.forEach(({id, name, address}) => {
           if (id === val) {
             this.netName = name;
             this.address = address;
           }
         });
       },
-    },
-    created() {
-      this.getUserInfo();
-    },
-    mounted() {
+      alertPermit() {
+        this.permit = false;
+        // 当用户已经开启 A权限设置 则不会出现A权限是否提示弹框
+        this.getLocation();
+      },
     },
   };
 </script>
@@ -151,7 +145,7 @@
 
   .address-data {
     height: 40vh;
-    padding: 30rpx;
+    padding: 30 rpx;
     font-size: 13pt;
   }
 </style>
