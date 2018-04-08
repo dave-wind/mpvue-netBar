@@ -52,7 +52,7 @@
   };
 </script>
 <style scoped type="text/scss" lang="scss">
-  @import "../../../static/scss/mixin.scss";
+  @import "../../static/scss/mixin.scss";
   .notLine {
     position: absolute;
     left: 0;

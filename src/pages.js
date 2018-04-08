@@ -10,11 +10,4 @@ module.exports = [
       enablePullDownRefresh: true,
     },
   },
-  {
-    path: '/pages/permis/index',
-    config: {
-      navigationBarTitleText: '',
-      enablePullDownRefresh: true,
-    },
-  },
 ];

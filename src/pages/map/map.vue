@@ -21,7 +21,7 @@
 
 <script>
   import wxp from '../../api/wxp';
-  import Permission from '../permis/index';
+  import Permission from '../../components/no-permis';
 
   const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
   const qqKey = 'XCEBZ-MEE3F-XAZJN-NKBX7-HXLTS-BIF6J';
@@ -63,19 +63,15 @@
         this.searchNetWork();
       },
       getLocation() {
-        wx.getLocation({
-          type: 'gcj02',
-          success: (res) => {
-            this.longitude = res.longitude;
-            this.latitude = res.latitude;
-            this.destination = res.destination;
-            this.briefAddr = res.briefAddr;
-            this.getUserInfo();
-          },
-          fail: () => {
-            // 没权限的 页面
-            this.permit = true;
-          },
+        wxp.getLocation({ type: 'gcj02' }).then((res) => {
+          this.longitude = res.longitude;
+          this.latitude = res.latitude;
+          this.destination = res.destination;
+          this.briefAddr = res.briefAddr;
+          this.getUserInfo();
+        }).catch(() => {
+          // 没权限的 组件
+          this.permit = true;
         });
       },
       searchNetWork() {
