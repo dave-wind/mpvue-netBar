@@ -20,6 +20,7 @@
 </template>
 
 <script>
+  import wxp from '../../api/wxp';
   import Permission from '../permis/index';
 
   const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
@@ -51,17 +52,12 @@
     methods: {
       getUserInfo() {
         // 调用登录接口
-        wx.getUserInfo({
-          success: (res) => {
-            this.userInfo = res.userInfo;
-            this.mapInitSDK();
-          },
-          complete: () => {
-          },
+        wxp.getUserInfo().then((res) => {
+          this.userInfo = res.userInfo;
+          this.mapInitSDK();
         });
       },
       mapInitSDK() {
-        console.log('init network');
         this.amapInstance = new amapFile.AMapWX({key: gdKey});
         this.qqMapSdk = new QQMapWX({key: qqKey});
         this.searchNetWork();
@@ -142,7 +138,7 @@
   @import "../../../static/scss/mixin.scss";
 
   .txt {
-    font-size: 11pt
+    font-size: 11pt;
   }
 
   .address-data {
