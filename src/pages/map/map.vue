@@ -34,7 +34,6 @@
     },
     data() {
       return {
-        userInfo: {},
         amapInstance: null,
         qqMapSdk: null,
         longitude: 0,
@@ -52,10 +51,13 @@
     methods: {
       getUserInfo() {
         // 调用登录接口
-        wxp.getUserInfo().then((res) => {
-          this.userInfo = res.userInfo;
-          this.mapInitSDK();
+        wx.getUserInfo({
+          complete: ({userInfo}) => {
+            const name = userInfo.nickName || '游客';
+            wxp.showToast({title: `${name} 你好`});
+          },
         });
+        this.mapInitSDK();
       },
       mapInitSDK() {
         this.amapInstance = new amapFile.AMapWX({key: gdKey});
@@ -63,7 +65,7 @@
         this.searchNetWork();
       },
       getLocation() {
-        wxp.getLocation({ type: 'gcj02' }).then((res) => {
+        wxp.getLocation({type: 'gcj02'}).then((res) => {
           this.longitude = res.longitude;
           this.latitude = res.latitude;
           this.destination = res.destination;
@@ -109,6 +111,13 @@
           });
         });
         this.markers = result;
+//        this.initShowAddsByDis(result[0]);
+      },
+      initShowAddsByDis(val) {
+        wxp.showToast({title: '只展示1000米内网咖哦~'}).then(() => {
+          this.netName = val.name;
+          this.address = val.address;
+        });
       },
       doMarkertap(e) {
         this.netWorkAddressById(e.mp.markerId);
