@@ -72,3 +72,8 @@
     color: $color;
   }
 }
+
+// rpx webstorm 处理
+@function rpx($value) {
+  @return $value * 1rpx;
+}

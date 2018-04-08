@@ -138,14 +138,16 @@
   };
 </script>
 
-<style scoped>
+<style scoped type="text/scss" lang="scss">
+  @import "../../../static/scss/mixin.scss";
+
   .txt {
     font-size: 11pt
   }
 
   .address-data {
     height: 40vh;
-    padding: 30 rpx;
+    padding: rpx(30);
     font-size: 13pt;
   }
 </style>

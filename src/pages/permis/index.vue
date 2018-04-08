@@ -52,6 +52,7 @@
   };
 </script>
 <style scoped type="text/scss" lang="scss">
+  @import "../../../static/scss/mixin.scss";
   .notLine {
     position: absolute;
     left: 0;
@@ -66,12 +67,12 @@
   .img-wrap {
     width: 100%;
     text-align: center;
-    margin-bottom: 50rpx;
+    margin-bottom: rpx(50);
   }
 
   .img-wrap image {
-    width: 240rpx;
-    height: 103rpx;
+    width: rpx(240);
+    height: rpx(103);
   }
 
   .txt {
@@ -81,8 +82,8 @@
   }
 
   .btn-wrap {
-    width: 350rpx;
-    margin-top: 50rpx;
+    width: rpx(350);
+    margin-top: rpx(50);
     margin-left: auto;
     margin-right: auto;
   }
