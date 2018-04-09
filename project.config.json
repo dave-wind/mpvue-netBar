@@ -10,7 +10,7 @@
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
 	"appid": "wx29774d99c08f10ac",
-	"projectname": "mpvue-network",
+	"projectname": "network",
 	"condition": {
 		"search": {
 			"current": -1,
