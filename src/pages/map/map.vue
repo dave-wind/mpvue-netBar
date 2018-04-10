@@ -16,6 +16,9 @@
       </div>
     </div>
     <permission :permit="permit" @alertPermit="alertPermit"></permission>
+    <div class="go-bar" v-show="address" @click="goBar">
+      <icon type="info" class="weui-flex__item" :size="40"/>
+    </div>
   </div>
 </template>
 
@@ -53,11 +56,15 @@
         // 调用登录接口
         wx.getUserInfo({
           complete: ({userInfo}) => {
-            const name = userInfo.nickName || '游客';
-            wxp.showToast({title: `${name} 你好`});
+            if (!userInfo) {
+              wxp.showToast({title: '游客你好', icon: 'none'});
+              return false
+            }
+            const name = userInfo.nickName;
+            wxp.showToast({title: `${name} 你好`, icon: 'none'});
+            this.mapInitSDK();
           },
         });
-        this.mapInitSDK();
       },
       mapInitSDK() {
         this.amapInstance = new amapFile.AMapWX({key: gdKey});
@@ -111,22 +118,28 @@
           });
         });
         this.markers = result;
-//        this.initShowAddsByDis(result[0]);
+        this.initShowAddsByDis(result[0]);
       },
       initShowAddsByDis(val) {
-        wxp.showToast({title: '只展示1000米内网咖哦~'}).then(() => {
-          this.netName = val.name;
-          this.address = val.address;
-        });
+        setTimeout(() => {
+          wxp.showModal({content: '只展示1000米内网咖哦~', showCancel: false}).then(() => {
+            this.netName = val.name;
+            this.address = val.address;
+          });
+        }, 1500);
       },
       doMarkertap(e) {
         this.netWorkAddressById(e.mp.markerId);
       },
+//      展示 网吧信息
       netWorkAddressById(val) {
-        this.markers.forEach(({id, name, address}) => {
+        this.markers.forEach(({id, name, address, longitude}) => {
           if (id === val) {
+            // 展示信息
             this.netName = name;
             this.address = address;
+            //  改变 全局的经纬度
+            this.longitude = longitude;
           }
         });
       },
@@ -135,6 +148,12 @@
         // 当用户已经开启 A权限设置 则不会出现A权限是否提示弹框
         this.getLocation();
       },
+//      路线规划
+      goBar() {
+        wx.navigateTo({
+//          url: `../goBar/goBar?id=${}`
+        })
+      }
     },
   };
 </script>
@@ -150,5 +169,24 @@
     height: 40vh;
     padding: rpx(30);
     font-size: 13pt;
+  }
+
+  .go-bar {
+    position: fixed;
+    right: rpx(30);
+    bottom: rpx(60);
+    animation: scale 0.5s 0.5s both;
+  }
+
+  @keyframes scale {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 </style>
