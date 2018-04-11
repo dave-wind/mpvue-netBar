@@ -6,24 +6,31 @@
 <script>
   //  const amapFile = require('../../utils/map/amap-wx.js');
   export default {
-    data () {
+    data() {
       return {
         myAmapFun: null,
-      }
+      };
     },
     mounted() {
-      this.init()
+      this.init();
     },
     methods: {
       init() {
-        wx.chooseLocation({
-          success: (res) => {
-            console.log(res);
-          }
-        })
+        const obj = JSON.parse(this.$route.query.para);
+        wx.getLocation({
+          type: 'gcj02',
+          success: () => {
+            wx.openLocation({
+              latitude: obj.disLatitude,
+              longitude: obj.disLongitude,
+              name: obj.netName,
+              address: obj.address,
+            });
+          },
+        });
       },
     },
-  }
+  };
 </script>
 <style>
 </style>

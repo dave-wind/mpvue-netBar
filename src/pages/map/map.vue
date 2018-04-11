@@ -45,8 +45,8 @@
         netName: '',
         address: '',
         permit: false,
-        disLongitude: 0, //目标地点 经纬度
-        disLatitude: 0
+        disLongitude: 0, // 目标地点 经纬度
+        disLatitude: 0,
       };
     },
     mounted() {
@@ -138,14 +138,14 @@
       },
 //      展示 网吧地址信息
       netWorkAddressById(val) {
-        this.markers.forEach(({id, name, address, longitude}) => {
+        this.markers.forEach(({id, name, address, longitude, latitude}) => {
           if (id === val) {
             // 展示信息
             this.netName = name;
             this.address = address;
             //  改变 全局的目的地经纬度
-            this.disLongitude = val.longitude;
-            this.disLatitude = val.latitude;
+            this.disLongitude = longitude;
+            this.disLatitude = latitude;
           }
         });
       },
@@ -156,14 +156,16 @@
       },
 //      路线规划
       goBar() {
-        let para = {
+        const para = {
           disLongitude: this.disLongitude,
           disLatitude: this.disLatitude,
+          netName: this.netName,
+          address: this.address,
         };
         wx.navigateTo({
-          url: `../goBar/goBar?para=${para}`,
-        })
-      }
+          url: `../goBar/goBar?para=${JSON.stringify(para)}`,
+        });
+      },
     },
   };
 </script>
