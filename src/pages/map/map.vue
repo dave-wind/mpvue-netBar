@@ -42,10 +42,11 @@
         longitude: 0,
         latitude: 0,
         markers: [],
-        polyline: [],
         netName: '',
         address: '',
         permit: false,
+        disLongitude: 0, //目标地点 经纬度
+        disLatitude: 0
       };
     },
     mounted() {
@@ -120,26 +121,31 @@
         this.markers = result;
         this.initShowAddsByDis(result[0]);
       },
+//      初始化的展示最近的 网咖数据
       initShowAddsByDis(val) {
         setTimeout(() => {
           wxp.showModal({content: '只展示1000米内网咖哦~', showCancel: false}).then(() => {
             this.netName = val.name;
             this.address = val.address;
+            // 全局 的目的地经纬度
+            this.disLongitude = val.longitude;
+            this.disLatitude = val.latitude;
           });
         }, 1500);
       },
       doMarkertap(e) {
         this.netWorkAddressById(e.mp.markerId);
       },
-//      展示 网吧信息
+//      展示 网吧地址信息
       netWorkAddressById(val) {
         this.markers.forEach(({id, name, address, longitude}) => {
           if (id === val) {
             // 展示信息
             this.netName = name;
             this.address = address;
-            //  改变 全局的经纬度
-            this.longitude = longitude;
+            //  改变 全局的目的地经纬度
+            this.disLongitude = val.longitude;
+            this.disLatitude = val.latitude;
           }
         });
       },
@@ -150,8 +156,12 @@
       },
 //      路线规划
       goBar() {
+        let para = {
+          disLongitude: this.disLongitude,
+          disLatitude: this.disLatitude,
+        };
         wx.navigateTo({
-//          url: `../goBar/goBar?id=${}`
+          url: `../goBar/goBar?para=${para}`,
         })
       }
     },

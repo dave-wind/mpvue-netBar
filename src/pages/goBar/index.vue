@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-  const amapFile = require('../../utils/map/amap-wx.js');
+  //  const amapFile = require('../../utils/map/amap-wx.js');
   export default {
     data () {
       return {
@@ -16,13 +16,11 @@
     },
     methods: {
       init() {
-        this.myAmapFun = new amapFile.AMapWX({key: 'cd17f895f7d70ef688f4bf600e067a8e'});
-        this.myAmapFun.getWalkingRoute({
-          origin: '116.481028,39.989643',
-          destination: '116.434446,39.90816',
-          success: function (data) {
-          },
-        });
+        wx.chooseLocation({
+          success: (res) => {
+            console.log(res);
+          }
+        })
       },
     },
   }
