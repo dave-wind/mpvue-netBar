@@ -15,16 +15,17 @@
       <div class="address">
         地址：{{address}}
       </div>
+      <div class="distance">距离你：{{distance}}米</div>
     </div>
-    <permission :permit="permit" @alertPermit="alertPermit"></permission>
     <div class="go-bar" v-show="stepList.length>0" @click="goDetail">
       <icon type="info" class="weui-flex__item" :size="40"/>
     </div>
+    <permission :permit="permit" @alertPermit="alertPermit"></permission>
   </div>
 </template>
 
 <script>
-  import wxp from '../../api/wxp';
+  import wxp from 'minapp-api-promise';
   import Permission from '../../components/no-permis';
 
   const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
@@ -47,6 +48,8 @@
         stepList: [],
         netName: '',
         address: '',
+        distance: '',
+        duration: '',
         permit: false,
         disLongitude: 0, // 目标地点 经纬度
         disLatitude: 0,
@@ -130,6 +133,7 @@
           wxp.showModal({content: '只展示1000米内网咖哦~', showCancel: false}).then(() => {
             this.netName = val.name;
             this.address = val.address;
+            this.distance = val.distance;
             // 全局 的目的地经纬度
             this.disLongitude = val.longitude;
             this.disLatitude = val.latitude;
@@ -143,11 +147,12 @@
       },
 //      展示 网吧地址信息
       netWorkAddressById(val) {
-        this.markers.forEach(({id, name, address, longitude, latitude}) => {
+        this.markers.forEach(({id, name, address, distance, longitude, latitude}) => {
           if (id === val) {
             // 展示信息
             this.netName = name;
             this.address = address;
+            this.distance = distance;
             //  改变 全局的目的地经纬度
             this.disLongitude = longitude;
             this.disLatitude = latitude;
@@ -165,6 +170,7 @@
           origin: this.longitude + ',' + this.latitude,
           destination: this.disLongitude + ',' + this.disLatitude,
           success: (data) => {
+            this.duration = data.paths[0].duration;
             this.getStepList(data.paths[0].steps);
             let points = []
             if (data.paths && data.paths[0] && data.paths[0].steps) {
@@ -201,6 +207,7 @@
           stepList: this.stepList,
           netName: this.netName,
           address: this.address,
+          duration: this.duration,
           jin: this.disLongitude,
           wei: this.disLatitude,
         };

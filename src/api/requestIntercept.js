@@ -2,7 +2,7 @@
  * Created by dave on 2018/4/8.
  */
 
-export default{
+export default {
   // 发出请求时的回调函数
   config (config) {
     // 请求前设置token
