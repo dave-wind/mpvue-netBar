@@ -5,18 +5,19 @@
          :latitude="latitude"
          scale="14"
          :markers="markers"
+         :polyline="polyline"
          @markertap="doMarkertap"
          show-location
-         style="width: 100%;height: 60vh">
+         style="width: 100%;height: 100vh">
     </map>
     <div class="address-data" v-if="address">
-      <div>{{netName}}</div>
-      <div>
+      <div class="name">{{netName}}</div>
+      <div class="address">
         地址：{{address}}
       </div>
     </div>
     <permission :permit="permit" @alertPermit="alertPermit"></permission>
-    <div class="go-bar" v-show="address" @click="goBar">
+    <div class="go-bar" v-show="stepList.length>0" @click="goDetail">
       <icon type="info" class="weui-flex__item" :size="40"/>
     </div>
   </div>
@@ -42,6 +43,8 @@
         longitude: 0,
         latitude: 0,
         markers: [],
+        polyline: [],
+        stepList: [],
         netName: '',
         address: '',
         permit: false,
@@ -133,8 +136,10 @@
           });
         }, 1500);
       },
+      // 点击事件
       doMarkertap(e) {
         this.netWorkAddressById(e.mp.markerId);
+        this.drawWalkingRoute();
       },
 //      展示 网吧地址信息
       netWorkAddressById(val) {
@@ -154,13 +159,50 @@
         // 当用户已经开启 A权限设置 则不会出现A权限是否提示弹框
         this.getLocation();
       },
-//      路线规划
-      goBar() {
+      // 绘制路线
+      drawWalkingRoute() {
+        this.amapInstance.getWalkingRoute({
+          origin: this.longitude + ',' + this.latitude,
+          destination: this.disLongitude + ',' + this.disLatitude,
+          success: (data) => {
+            this.getStepList(data.paths[0].steps);
+            let points = []
+            if (data.paths && data.paths[0] && data.paths[0].steps) {
+              let steps = data.paths[0].steps;
+              steps.forEach((item, i) => {
+                let poLen = steps[i].polyline.split(';');
+                poLen.forEach((jtem, j) => {
+                  points.push({
+                    longitude: parseFloat(poLen[j].split(',')[0]),
+                    latitude: parseFloat(poLen[j].split(',')[1])
+                  })
+                })
+              })
+            }
+            this.polyline = [];
+            this.polyline.push({
+              points: points,
+              color: '#f39800',
+              width: 6
+            })
+          }
+        })
+      },
+      // 获取步行路线
+      getStepList (list) {
+        this.stepList = []
+        list.forEach(({instruction}) => {
+          this.stepList.push(instruction);
+        })
+      },
+      //  查看详情路线
+      goDetail() {
         const para = {
-          disLongitude: this.disLongitude,
-          disLatitude: this.disLatitude,
+          stepList: this.stepList,
           netName: this.netName,
           address: this.address,
+          jin: this.disLongitude,
+          wei: this.disLatitude,
         };
         wx.navigateTo({
           url: `../goBar/goBar?para=${JSON.stringify(para)}`,
@@ -178,15 +220,29 @@
   }
 
   .address-data {
-    height: 40vh;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: rpx(150);
     padding: rpx(30);
     font-size: 13pt;
+    background-color: #ffffff;
+    .name {
+      width: 100%;
+      font-weight: 600;
+    }
+    .address {
+      width: 80%;
+      font-size: 11pt;
+    }
   }
 
   .go-bar {
     position: fixed;
     right: rpx(30);
     bottom: rpx(60);
+    z-index: 100;
     animation: scale 0.5s 0.5s both;
   }
 

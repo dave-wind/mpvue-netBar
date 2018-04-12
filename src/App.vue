@@ -3,6 +3,9 @@ export default {
 };
 </script>
 <style>
+  #app {
+    position: relative;
+  }
 .container {
   height: 100%;
   display: flex;

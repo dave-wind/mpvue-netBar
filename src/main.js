@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App';
 import MpvueRouterPath from 'mpvue-router-patch';
+import '../static/weui/css/weui.min.css';
 
 Vue.config.productionTip = false;
 App.mpType = 'app'
@@ -15,9 +16,9 @@ export default {
     pages: ['^pages/map/map', 'pages/goBar/goBar'],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#262930',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black',
+      navigationBarTextStyle: 'white',
     },
     tarBar: {},
   },

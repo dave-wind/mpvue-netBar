@@ -9,6 +9,6 @@ app.$mount()
 
 export default  {
   config: {
-    navigationBarTitleText: ''
+    navigationBarTitleText: '步行路线规划'
   }
 }
