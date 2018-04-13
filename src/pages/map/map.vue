@@ -1,30 +1,32 @@
 <template>
-  <div>
-    <map id="map"
-         :longitude="longitude"
-         :latitude="latitude"
-         scale="14"
-         :markers="markers"
-         :polyline="polyline"
-         @markertap="doMarkertap"
-         show-location>
-    </map>
-    <div class="address-data" v-if="address">
-      <div class="name">{{netName}}</div>
-      <div class="address">
-        地址:{{address}}
+  <div class="container">
+    <div v-if="!permit">
+      <map id="map"
+           :longitude="longitude"
+           :latitude="latitude"
+           scale="14"
+           :markers="markers"
+           :polyline="polyline"
+           @markertap="doMarkertap"
+           show-location>
+      </map>
+      <div class="address-data" v-if="address">
+        <div class="name">{{netName}}</div>
+        <div class="address">
+          地址:{{address}}
+        </div>
+        <div class="distance">距离你：{{distance}}米</div>
       </div>
-      <div class="distance">距离你：{{distance}}米</div>
-    </div>
-    <div class="go-bar" v-show="stepList.length>0" @click="goDetail">
-      <icon type="info" class="weui-flex__item" :size="40"/>
+      <div class="go-bar" v-show="stepList.length>0" @click="goDetail">
+        <icon type="info" class="weui-flex__item" :size="40"/>
+      </div>
     </div>
     <permission :permit="permit" @alertPermit="alertPermit"></permission>
   </div>
 </template>
 
 <script>
-  import wxp from 'minapp-api-promise';
+  import wxp from '../../api/wxp';
   import Permission from '../../components/no-permis';
 
   const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
@@ -62,13 +64,13 @@
         // 调用登录接口
         wx.getUserInfo({
           complete: ({userInfo}) => {
+            this.mapInitSDK();
             if (!userInfo) {
               wxp.showToast({title: '游客你好', icon: 'none'});
-              return false
+            } else {
+              const name = userInfo.nickName;
+              wxp.showToast({title: `${name} 你好`, icon: 'none'});
             }
-            const name = userInfo.nickName;
-            wxp.showToast({title: `${name} 你好`, icon: 'none'});
-            this.mapInitSDK();
           },
         });
       },
@@ -78,15 +80,19 @@
         this.searchNetWork();
       },
       getLocation() {
-        wxp.getLocation({type: 'gcj02'}).then((res) => {
-          this.longitude = res.longitude;
-          this.latitude = res.latitude;
-          this.destination = res.destination;
-          this.briefAddr = res.briefAddr;
-          this.getUserInfo();
-        }).catch(() => {
-          // 没权限的 组件
-          this.permit = true;
+        wx.getLocation({
+          type: 'gcj02',
+          success: (res) => {
+            this.longitude = res.longitude;
+            this.latitude = res.latitude;
+            this.destination = res.destination;
+            this.briefAddr = res.briefAddr;
+            this.getUserInfo();
+          },
+          fail: () => {
+            // 没权限的 组件
+            this.permit = true;
+          }
         });
       },
       searchNetWork() {

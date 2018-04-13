@@ -12,8 +12,6 @@
   </div>
 </template>
 <script>
-  import wxp from 'minapp-api-promise';
-
   export default {
     data() {
       return {
@@ -35,7 +33,7 @@
       },
       'list': function () {
         const time = parseInt(this.obj.duration / 60);
-        const t = `需用时：${time} 分钟`;
+        const t = `用时：约${time} 分钟`;
         this.obj.stepList.push(t)
         return this.obj.stepList;
       }
@@ -43,15 +41,18 @@
     methods: {
 //       内置wx 地图导航
       navigation() {
-        wxp.getLocation({type: 'gcj02'}).then(() => {
-          wx.openLocation({
-            latitude: parseFloat(this.obj.disLatitude),
-            longitude: parseFloat(this.obj.disLongitude),
-            name: this.obj.netName,
-            address: this.obj.address,
-            scale: 28
-          })
-        });
+        wx.getLocation({
+          type: 'gcj02',
+          success: () => {
+            console.log(this.obj);
+            wx.openLocation({
+              longitude: this.obj.jin,
+              latitude: this.obj.wei,
+              name: this.obj.netName,
+              address: this.obj.address,
+            })
+          }
+        })
       },
     },
   };

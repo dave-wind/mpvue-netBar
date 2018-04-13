@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="notLine" v-show="permit">
+    <div class="notLine" v-if="permit">
       <div class="img-wrap">
         <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
       </div>
@@ -35,7 +35,6 @@
           confirmText: '确认',
           showCancel: false,
           success: (res) => {
-            console.log(res);
             // 点击“确认”时打开设置页面
             if (res.confirm) {
               console.log('用户点击确认');
@@ -60,7 +59,7 @@
     width: 100%;
     height: 100vh;
     padding-top: 30vh;
-    z-index: 100;
+    z-index: 120;
     background-color: #fff;
   }
 
