@@ -13,11 +13,6 @@
 </template>
 <script>
   export default {
-    data() {
-      return {
-        a: '233',
-      };
-    },
     mounted() {
     },
     computed: {
@@ -44,7 +39,6 @@
         wx.getLocation({
           type: 'gcj02',
           success: () => {
-            console.log(this.obj);
             wx.openLocation({
               longitude: this.obj.jin,
               latitude: this.obj.wei,
