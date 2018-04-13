@@ -7,13 +7,12 @@
          :markers="markers"
          :polyline="polyline"
          @markertap="doMarkertap"
-         show-location
-         style="width: 100%;height: 100vh">
+         show-location>
     </map>
     <div class="address-data" v-if="address">
       <div class="name">{{netName}}</div>
       <div class="address">
-        地址：{{address}}
+        地址:{{address}}
       </div>
       <div class="distance">距离你：{{distance}}米</div>
     </div>
@@ -226,21 +225,25 @@
     font-size: 11pt;
   }
 
+  #map {
+    width: 100%;
+    height: calc(100vh - 175rpx);
+  }
+
   .address-data {
-    position: fixed;
+    position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: rpx(150);
-    padding: rpx(30);
-    font-size: 13pt;
+    padding: rpx(20) 0 rpx(20) rpx(20);
+    font-size: 12pt;
     background-color: #ffffff;
     .name {
       width: 100%;
       font-weight: 600;
     }
     .address {
-      width: 80%;
+      width: 90%;
       font-size: 11pt;
     }
   }

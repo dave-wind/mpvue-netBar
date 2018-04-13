@@ -2,7 +2,7 @@
   <div>
     <div class="weui-cells__title">{{netName}}路线如下：</div>
     <div class="weui-cells weui-cells_after-title">
-      <div class="weui-cell" v-for="(item,index) in stepList" :key="index">
+      <div class="weui-cell" v-for="(item,index) in list" :key="index">
         <div class="weui-cell__bd">{{item}}</div>
       </div>
     </div>
@@ -17,31 +17,30 @@
   export default {
     data() {
       return {
-        obj: null,
-        netName: '',
-        duration: 0,
-        stepList: [],
+        a: '233',
       };
     },
     mounted() {
-      this.init();
     },
     computed: {
-      'list': function () {
-//        在计算属性里 不能直接获取对象下属性
-//        console.log(this.obj.stepList);
+      'obj': function () {
+        // If you must reassign references, use let  Use const for all of your references
+        const para = JSON.parse(this.$root.$mp.query.para);
+        return para
       },
+      'netName': function () {
+//       {{}}不能直接获取对象下属性 ex: this.obj.netName
+        const name = this.obj.netName;
+        return name;
+      },
+      'list': function () {
+        const time = parseInt(this.obj.duration / 60);
+        const t = `需用时：${time} 分钟`;
+        this.obj.stepList.push(t)
+        return this.obj.stepList;
+      }
     },
     methods: {
-      init() {
-        // npm i mpvue-router-patch -D 插件
-        this.obj = JSON.parse(this.$route.query.para);
-        this.netName = this.obj.netName;
-        this.duration = this.obj.duration;
-        const t = `需用时：${this.duration / 60} 分钟`;
-        this.stepList = this.obj.stepList;
-        this.stepList.push(t);
-      },
 //       内置wx 地图导航
       navigation() {
         wxp.getLocation({type: 'gcj02'}).then(() => {
@@ -50,7 +49,8 @@
             longitude: parseFloat(this.obj.disLongitude),
             name: this.obj.netName,
             address: this.obj.address,
-          });
+            scale: 28
+          })
         });
       },
     },
