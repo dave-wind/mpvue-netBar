@@ -2,10 +2,12 @@ import Vue from 'vue';
 import App from './App';
 import MpvueRouterPath from 'mpvue-router-patch';
 import '../static/weui/css/weui.min.css';
+import Tools from './global';
 
 Vue.config.productionTip = false;
 App.mpType = 'app'
 Vue.use(MpvueRouterPath);
+Vue.use(Tools);
 const app = new Vue(App);
 app.$mount();
 

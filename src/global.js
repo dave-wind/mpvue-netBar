@@ -12,6 +12,14 @@ const install = (Vue) => {
       });
     });
   };
+  Vue.prototype.loading = {
+    show: (txt) => {
+      wx.showLoading({title: txt});
+    },
+    hide: () => {
+      wx.hideLoading();
+    }
+  }
 };
 
 export default {

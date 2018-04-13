@@ -66,10 +66,10 @@
           complete: ({userInfo}) => {
             this.mapInitSDK();
             if (!userInfo) {
-              wxp.showToast({title: '游客你好', icon: 'none'});
+              this.tip('游客你好');
             } else {
               const name = userInfo.nickName;
-              wxp.showToast({title: `${name} 你好`, icon: 'none'});
+              this.tip(`${name} 你好`)
             }
           },
         });
@@ -96,6 +96,7 @@
         });
       },
       searchNetWork() {
+        this.loading.show('Loading...');
         this.qqMapSdk.search({
           keyword: '网吧',
           location: {
@@ -103,14 +104,12 @@
             longitude: this.longitude,
           },
           success: (res) => {
-            // 关闭loading
-            wx.hideLoading();
+            this.loading.hide();
             // 根据返回的结果marker在地图上面
             const data = res.data;
             this.refactorMapArray(data);
           },
           fail: () => {
-            // 关闭loading
             wx.hideLoading();
           },
         });
