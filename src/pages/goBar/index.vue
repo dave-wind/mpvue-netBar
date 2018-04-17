@@ -6,12 +6,13 @@
         <div class="weui-cell__bd">{{item}}</div>
       </div>
     </div>
-    <div class="navigation" @click="navigation">
-      <img src="http://s1.axhome.com.cn/wechat/nv-icon.png" alt="">
-    </div>
+    <fixed-btn :cname="navigation"  @click="navigation">
+      <img class="go" src="http://s1.axhome.com.cn/wechat/nv-icon.png" alt="" width="30px" height="30px">
+    </fixed-btn>
   </div>
 </template>
 <script>
+  import FixedBtn from '../../components/fixation';
   export default {
     mounted() {
     },
@@ -51,17 +52,14 @@
     },
   };
 </script>
-<style scoped type="text/scss" lang="scss">
+<style type="text/scss" lang="scss">
   @import "../../../static/scss/mixin.scss";
 
   .navigation {
-    position: fixed;
-    right: rpx(30);
-    bottom: rpx(60);
     width: rpx(48);
     height: rpx(48);
     animation: scale 0.5s 0.5s infinite;
-    img {
+    img.go {
       display: block;
       @include wh100;
     }

@@ -1,100 +1,107 @@
 <template>
   <div class="container">
-    <div v-if="show">
-      <net-map></net-map>
-      <!--<div class="go-bar" v-show="stepList.length>0" @click="goDetail">-->
-      <!--<icon type="info" class="weui-flex__item" :size="40"/>-->
-      <!--</div>-->
+    <div v-if="permit">
+      <net-map
+        :longitude="longitude"
+        :latitude="latitude"
+        :search="search">
+      </net-map>
+      <net-address></net-address>
+      <fixed-btn :cname="fxClass" typeInfo="info" @click="goDetail" :fxShow="fxShow"></fixed-btn>
     </div>
-    <permission></permission>
+    <permission
+      @changePermit="changePermit"
+      @setLocation="setLocation"
+      @getUserInfo="getUserInfo"
+      @openSetting="openSetting">
+    </permission>
   </div>
 </template>
 
 <script>
-  import wxp from '../../api/wxp';
   import Permission from '../../components/permis';
   import NetMap from '../../components/net-map';
-  import Bus from '../../bus';
-  import {mapGetters} from 'vuex';
   import NetAddress from '../../components/address';
+  import FixedBtn from '../../components/fixation';
+  import {mapGetters} from 'vuex';
 
   export default {
     components: {
       Permission,
       NetMap,
       NetAddress,
+      FixedBtn,
     },
     data() {
       return {
-        show: false,
-//      Address 组件
-        netName: '',
-        address: '',
-        distance: '',
+        permit: false,
+        longitude: 0,
+        latitude: 0,
+        search: '网吧',
+        fxClass: 'goBar',
+        fxShow: false,
       };
     },
     computed: {
       ...mapGetters({
-        permit: 'getPermit'
-      }),
+        userInfo: 'getUserInfo',
+        address: 'getAddress',
+        stepList: 'getStepList',
+        routeInfo: 'getRouteInfo',
+      })
     },
     methods: {
+      setLocation(val) {
+        this.longitude = val.longitude;
+        this.latitude = val.latitude;
+        return this.longitude
+      },
+      getUserInfo(val) {
+        if (val) {
+          this.$store.commit('SET_USER', val);
+        } else {
+          this.$store.commit('SET_USER', '游客');
+        }
+      },
+      changePermit(val) {
+        return val;
+      },
       //  查看详情路线
       goDetail() {
-//        const para = {
-//          stepList: this.stepList,
-//          netName: this.netName,
-//          address: this.address,
-//          duration: this.duration,
-//          jin: this.disLongitude,
-//          wei: this.disLatitude,
-//        };
+        const para = {
+          stepList: this.stepList,
+          netName: this.address.netName,
+          address: this.address.address,
+          duration: this.routeInfo.duration,
+          jin: this.routeInfo.end_jin,
+          wei: this.routeInfo.end_wei,
+        };
         wx.navigateTo({
-          url: '../goBar/goBar',
+          url: `../goBar/goBar?para=${JSON.stringify(para)}`,
         });
       },
     },
     watch: {
-      'permit': function (val) {
-        if (!val) {
-//          this.init();
-          console.log(val);
-        }
+      'userInfo': function () {
+        this.permit = true;
+      },
+      'stepList': function () {
+        this.fxShow = true
       }
     }
   };
 </script>
 
-<style scoped type="text/scss" lang="scss">
+<style type="text/scss" lang="scss">
   @import "../../../static/scss/mixin.scss";
 
   .txt {
     font-size: 11pt;
   }
 
-  .address-data {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: rpx(20) 0 rpx(20) rpx(20);
-    font-size: 12pt;
-    background-color: #ffffff;
-    .name {
-      width: 100%;
-      font-weight: 600;
-    }
-    .address {
-      width: 90%;
-      font-size: 11pt;
-    }
-  }
-
-  .go-bar {
-    position: fixed;
-    right: rpx(30);
-    bottom: rpx(60);
-    z-index: 100;
+  .goBar {
+    width: rpx(60);
+    height: rpx(60);
     animation: scale 0.5s 0.5s both;
   }
 
@@ -108,5 +115,12 @@
     100% {
       transform: scale(1);
     }
+  }
+  /*btn  组件*/
+  .fixed {
+    position: fixed;
+    right: rpx(30);
+    bottom: rpx(60);
+    z-index: 100;
   }
 </style>

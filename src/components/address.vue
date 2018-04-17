@@ -1,10 +1,10 @@
 <template>
   <div class="address-data">
-    <!--<div class="name">{{netName}}</div>-->
-    <!--<div class="address">-->
-    <!--地址:{{address}}-->
-    <!--</div>-->
-    <!--<div class="distance">距离你：{{distance}}米</div>-->
+    <div class="name">{{netName}}</div>
+    <div class="address">
+    地址:{{addr}}
+    </div>
+    <div class="distance">距离你：{{distance}}米</div>
   </div>
 </template>
 <script>
@@ -12,22 +12,26 @@
   export default {
     data () {
       return {
-        netName: '',
-        address: '',
-        distance: '',
       }
     },
     mounted () {
-      this.init();
     },
     computed: {
       ...mapGetters({
-        addObj: 'getAddress'
-      })
+        address: 'getAddress',
+      }),
+      'netName': function () {
+        return this.address.netName;
+      },
+      'addr': function () {
+        return this.address.address;
+      },
+      'distance': function () {
+        return this.address.distance;
+      }
     },
-    methods: {
-      init () {
-        console.log(this.addObj);
+    watch: {
+      'address': function (val) {
       }
     }
   }

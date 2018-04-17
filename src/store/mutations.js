@@ -4,16 +4,16 @@
 import * as types from './mutation-types';
 
 export default {
-  [types.SET_PERMIT] (state, v) {
-    state.permit = v;
-  },
-  [types.SET_MAP_DATA] (state, v) {
-    state.mapData = [...{}, v];
-  },
   [types.SET_USER] (state, v) {
-    state.userInfo = [...{}, v];
+    state.userInfo = {...v};
   },
   [types.SET_ADDRESS] (state, v) {
-    state.addObj = [...{}, v];
-  }
+    state.address = {...v};
+  },
+  [types.SET_ROUTEINFO] (state, v) {
+    state.routeInfo = {...v};
+  },
+  [types.SET_STEPLIST] (state, v) {
+    state.stepList = [...v];
+  },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="notLine" v-if="permit">
+  <div class="notLine" v-if="show">
     <div class="img-wrap">
       <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
     </div>
@@ -10,18 +10,18 @@
   </div>
 </template>
 <script>
-  import {mapGetters} from 'vuex';
-
   export default {
+    props: {
+      permit: {
+        type: Boolean,
+        default: false,
+      }
+    },
     data() {
       return {
-        userRefuse: null,
+        show: false,
+        tempLocation: null,
       };
-    },
-    computed: {
-      ...mapGetters({
-        permit: 'getPermit',
-      })
     },
     mounted () {
       this.locationPermis();
@@ -34,22 +34,20 @@
             const temp = {
               longitude: res.longitude,
               latitude: res.latitude,
-              destination: res.destination,
-              briefAddr: res.briefAddr,
             }
-            this.$store.commit('SET_MAP_DATA', temp)
             this.getUserInfo();
+            this.$emit('setLocation', temp);
           },
           fail: () => {
             // 展示没权限的 组件
-            this.$store.commit('SET_PERMIT', true);
+            this.show = true;
           }
         });
       },
       getUserInfo() {
         wx.getUserInfo({
           complete: ({userInfo}) => {
-            this.$store.commit('SET_USER', userInfo);
+            this.$emit('getUserInfo', userInfo);
           },
         });
       },
@@ -71,9 +69,11 @@
             // 点击“确认”时打开设置页面
             if (res.confirm) {
               console.log('用户点击确认');
+              this.show = false;
               wx.openSetting({ // 当用户已经开启 A权限设置 则不会出现A权限是否提示弹框
                 success: () => {
-                  this.$store.commit('SET_PERMIT', false);
+                  this.$emit('changePermit', true);
+                  this.locationPermis();
                 },
               });
             }

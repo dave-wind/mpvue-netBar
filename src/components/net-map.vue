@@ -20,70 +20,62 @@
   const amapFile = require('../utils/map/amap-wx.js');
 
   export default {
+    props: {
+      longitude: {
+        type: String,
+        default: 0,
+      },
+      latitude: {
+        type: String,
+        default: 0,
+      },
+      search: {
+        type: String,
+        default: '网吧',
+      },
+    },
     data () {
       return {
         amapInstance: null,
         qqMapSdk: null,
-        longitude: 0,
-        latitude: 0,
         markers: [],
         polyline: [],
         stepList: [],
-        duration: '',
         // 目标地点 经纬度
         disLongitude: 0,
         disLatitude: 0,
-        // Address 组件
-        netName: '',
-        address: '',
-        distance: '',
       }
     },
     mounted () {
-//      this.initBus();
-      this.init();
+      this.mapInitSDK().then(() => {
+        this.showUserInfo();
+      });
     },
     computed: {
       ...mapGetters({
-        permit: 'getPermit',
-        mapData: 'getMapData',
         userInfo: 'getUserInfo',
       }),
     },
     methods: {
-      initBus () {
-        Bus.$on('init', this.init);
-      },
-      getUserInfo() {
-        this.mapInitSDK();
-        if (!this.userInfo) {
-          this.tip('游客你好');
-        } else {
-          const name = this.userInfo.nickName;
-          this.tip(`${name} 你好`)
-        }
-      },
-      init() {
-        console.log(23333);
-        return false
-//        this.longitude = this.mapData.longitude;
-//        this.latitude = this.mapData.latitude;
-//        this.destination = this.mapData.destination;
-//        this.briefAddr = this.mapData.briefAddr;
-        this.getUserInfo();
-      },
-      mapInitSDK() {
+      async mapInitSDK() {
         this.amapInstance = new amapFile.AMapWX({key: gdKey});
         this.qqMapSdk = new QQMapWX({key: qqKey});
         this.searchNetWork();
       },
+      showUserInfo() {
+        if (typeof this.userInfo === 'string') {
+          this.tip(`${this.userInfo}你好`);
+        } else {
+          this.tip(`${this.userInfo.nickName}你好`);
+        }
+      },
       searchNetWork() {
         this.loading.show('Loading...');
         this.qqMapSdk.search({
-          keyword: '网吧',
+          keyword: this.search,
           location: {
-            latitude: this.latitude,
             longitude: this.longitude,
+            latitude: this.latitude,
           },
           success: (res) => {
             this.loading.hide();
@@ -119,13 +111,14 @@
           netName: val.name,
           address: val.address,
           distance: val.distance,
-          disLongitude: val.disLongitude,
-          disLatitude: val.disLatitude,
         }
         this.$store.commit('SET_ADDRESS', temp);
+        this.disLongitude = val.longitude;
+        this.disLatitude = val.latitude;
       },
       // 点击事件
       doMarkertap(e) {
+        console.log(e.mp.markerId);
         this.netWorkAddressById(e.mp.markerId);
         this.drawWalkingRoute();
       },
@@ -137,10 +130,10 @@
               netName: name,
               address: address,
               distance: distance,
-              disLongitude: longitude,
-              disLatitude: latitude,
             }
             this.$store.commit('SET_ADDRESS', temp);
+            this.disLongitude = longitude;
+            this.disLatitude = latitude;
           }
         });
       },
@@ -150,7 +143,13 @@
           origin: this.longitude + ',' + this.latitude,
           destination: this.disLongitude + ',' + this.disLatitude,
           success: (data) => {
-            this.duration = data.paths[0].duration;
+            const duration = data.paths[0].duration;
+            const temp = {
+              duration: duration,
+              end_jin: this.disLongitude,
+              end_wei: this.disLatitude,
+            }
+            this.$store.commit('SET_ROUTEINFO', temp);
             this.getStepList(data.paths[0].steps);
             let points = []
             if (data.paths && data.paths[0] && data.paths[0].steps) {
@@ -180,6 +179,7 @@
         list.forEach(({instruction}) => {
           this.stepList.push(instruction);
         })
+        this.$store.commit('SET_STEPLIST', this.stepList);
       },
     },
   }
