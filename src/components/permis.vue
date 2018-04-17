@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <div class="notLine" v-if="permit">
-      <div class="img-wrap">
-        <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
-      </div>
-      <div class="txt">没权限 你找个锤子~</div>
-      <div class="btn-wrap">
-        <button type="bottom" @click="resetGetpermis">重新获取权限</button>
-      </div>
+  <div class="notLine" v-if="permit">
+    <div class="img-wrap">
+      <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
+    </div>
+    <div class="txt">没权限 你找个锤子~</div>
+    <div class="btn-wrap">
+      <button type="bottom" @click="resetGetpermis">重新获取权限</button>
     </div>
   </div>
 </template>
