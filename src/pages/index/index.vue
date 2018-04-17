@@ -7,7 +7,7 @@
         :search="search">
       </net-map>
       <net-address></net-address>
-      <fixed-btn :cname="fxClass" typeInfo="info" @click="goDetail" :fxShow="fxShow"></fixed-btn>
+      <fixed-btn :cname="fxClass" typeInfo="info" :fxShow="fxShow" @click="goDetail"></fixed-btn>
     </div>
     <permission
       @changePermit="changePermit"
@@ -48,13 +48,13 @@
         address: 'getAddress',
         stepList: 'getStepList',
         routeInfo: 'getRouteInfo',
-      })
+      }),
     },
     methods: {
       setLocation(val) {
         this.longitude = val.longitude;
         this.latitude = val.latitude;
-        return this.longitude
+        return this.longitude;
       },
       getUserInfo(val) {
         if (val) {
@@ -86,9 +86,9 @@
         this.permit = true;
       },
       'stepList': function () {
-        this.fxShow = true
-      }
-    }
+        this.fxShow = true;
+      },
+    },
   };
 </script>
 
@@ -100,8 +100,6 @@
   }
 
   .goBar {
-    width: rpx(60);
-    height: rpx(60);
     animation: scale 0.5s 0.5s both;
   }
 
@@ -116,7 +114,7 @@
       transform: scale(1);
     }
   }
-  /*btn  组件*/
+  /*btn*/
   .fixed {
     position: fixed;
     right: rpx(30);

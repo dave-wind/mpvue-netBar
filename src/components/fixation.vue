@@ -24,14 +24,20 @@
         default: true,
       },
     },
-    data () {
+    data() {
       return {
         paneClass: 'fixed',
-      }
-    }
-  }
+      };
+    },
+  };
 </script>
-<style scoped type="text/scss" lang="scss">
+<style type="text/scss" lang="scss">
   @import "../../static/scss/mixin.scss";
-
+  /*组件css 在mpvue内没效果 所以写在这没效果*/
+  .fixed {
+    position: fixed;
+    right: rpx(30);
+    bottom: rpx(60);
+    z-index: 100;
+  }
 </style>

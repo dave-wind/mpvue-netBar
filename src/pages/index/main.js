@@ -1,14 +1,14 @@
 /**
  * Created by dave on 2018/3/21.
  */
-import Vue from 'vue'
-import App from './index'
+import Vue from 'vue';
+import App from './index';
 
-const app = new Vue(App)
+const app = new Vue(App);
 app.$mount()
 
-export default  {
+export default {
   config: {
-    navigationBarTitleText: '小宝带你找网咖'
-  }
-}
+    navigationBarTitleText: '小宝带你找网咖',
+  },
+};

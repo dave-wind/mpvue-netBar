@@ -10,8 +10,6 @@
   </map>
 </template>
 <script>
-  import wxp from '../api/wxp';
-  import Bus from '../bus';
   import {mapGetters} from 'vuex';
 
   const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
@@ -34,7 +32,7 @@
         default: '网吧',
       },
     },
-    data () {
+    data() {
       return {
         amapInstance: null,
         qqMapSdk: null,
@@ -44,9 +42,9 @@
         // 目标地点 经纬度
         disLongitude: 0,
         disLatitude: 0,
-      }
+      };
     },
-    mounted () {
+    mounted() {
       this.mapInitSDK().then(() => {
         this.showUserInfo();
       });
@@ -107,7 +105,7 @@
       },
 //      初始化的展示最近的 网咖数据
       initShowAddsByDis(val) {
-        let temp = {
+        const temp = {
           netName: val.name,
           address: val.address,
           distance: val.distance,
@@ -118,7 +116,6 @@
       },
       // 点击事件
       doMarkertap(e) {
-        console.log(e.mp.markerId);
         this.netWorkAddressById(e.mp.markerId);
         this.drawWalkingRoute();
       },
@@ -126,7 +123,7 @@
       netWorkAddressById(val) {
         this.markers.forEach(({id, name, address, distance, longitude, latitude}) => {
           if (id === val) {
-            let temp = {
+            const temp = {
               netName: name,
               address: address,
               distance: distance,
@@ -151,30 +148,30 @@
             }
             this.$store.commit('SET_ROUTEINFO', temp);
             this.getStepList(data.paths[0].steps);
-            let points = []
+            const points = []
             if (data.paths && data.paths[0] && data.paths[0].steps) {
-              let steps = data.paths[0].steps;
+              const steps = data.paths[0].steps;
               steps.forEach((item, i) => {
-                let poLen = steps[i].polyline.split(';');
+                const poLen = steps[i].polyline.split(';');
                 poLen.forEach((jtem, j) => {
                   points.push({
                     longitude: parseFloat(poLen[j].split(',')[0]),
-                    latitude: parseFloat(poLen[j].split(',')[1])
-                  })
-                })
-              })
+                    latitude: parseFloat(poLen[j].split(',')[1]),
+                  });
+                });
+              });
             }
             this.polyline = [];
             this.polyline.push({
               points: points,
               color: '#f39800',
-              width: 6
-            })
-          }
-        })
+              width: 6,
+            });
+          },
+        });
       },
       // 获取步行路线
-      getStepList (list) {
+      getStepList(list) {
         this.stepList = []
         list.forEach(({instruction}) => {
           this.stepList.push(instruction);
@@ -182,7 +179,7 @@
         this.$store.commit('SET_STEPLIST', this.stepList);
       },
     },
-  }
+  };
 </script>
 <style>
   #map {
