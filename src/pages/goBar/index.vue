@@ -6,20 +6,31 @@
         <div class="weui-cell__bd">{{item}}</div>
       </div>
     </div>
-    <div class="navigation" @click="navigation">
-      <img src="http://s1.axhome.com.cn/wechat/nv-icon.png" alt="">
-    </div>
+    <fixed-btn :cname="fxClass" typeInfo="waiting" :iconShow="iconShow" @click="navigation">
+      <img class="go" src="http://s1.axhome.com.cn/wechat/nv-icon.png" alt="">
+    </fixed-btn>
   </div>
 </template>
 <script>
+  import FixedBtn from '../../components/fixation';
+
   export default {
+    components: {
+      FixedBtn,
+    },
+    data() {
+      return {
+        fxClass: 'navigation',
+        iconShow: false,
+      };
+    },
     mounted() {
     },
     computed: {
       'obj': function () {
         // If you must reassign references, use let  Use const for all of your references
         const para = JSON.parse(this.$root.$mp.query.para);
-        return para
+        return para;
       },
       'netName': function () {
 //       {{}}不能直接获取对象下属性 ex: this.obj.netName
@@ -31,7 +42,7 @@
         const t = `用时：约${time} 分钟`;
         this.obj.stepList.push(t)
         return this.obj.stepList;
-      }
+      },
     },
     methods: {
 //       内置wx 地图导航
@@ -44,26 +55,27 @@
               latitude: this.obj.wei,
               name: this.obj.netName,
               address: this.obj.address,
-            })
-          }
-        })
+            });
+          },
+        });
       },
     },
   };
 </script>
-<style scoped type="text/scss" lang="scss">
+<style type="text/scss" lang="scss">
   @import "../../../static/scss/mixin.scss";
 
   .navigation {
     position: fixed;
     right: rpx(30);
     bottom: rpx(60);
-    width: rpx(48);
-    height: rpx(48);
+    width: rpx(80);
+    height: rpx(80);
     animation: scale 0.5s 0.5s infinite;
-    img {
+    img.go {
       display: block;
-      @include wh100;
+      width: rpx(80);
+      height: rpx(80);
     }
   }
 

@@ -1,25 +1,56 @@
 <template>
-  <div>
-    <div class="notLine" v-if="permit">
-      <div class="img-wrap">
-        <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
-      </div>
-      <div class="txt">没权限你 找个锤子网吧~</div>
-      <div class="btn-wrap">
-        <button type="bottom" @click="resetGetpermis">重新获取权限</button>
-      </div>
+  <div class="notLine" v-if="show">
+    <div class="img-wrap">
+      <img src="http://s1.axhome.com.cn/anxin/images/not-404.png" alt="">
+    </div>
+    <div class="txt">没权限 你找个锤子~</div>
+    <div class="btn-wrap">
+      <button type="bottom" @click="resetGetpermis">重新获取权限</button>
     </div>
   </div>
 </template>
 <script>
   export default {
-    props: ['permit'],
+    props: {
+      permit: {
+        type: Boolean,
+        default: false,
+      },
+    },
     data() {
       return {
-        userRefuse: null,
+        show: false,
+        tempLocation: null,
       };
     },
+    mounted () {
+      this.locationPermis();
+    },
     methods: {
+      locationPermis() {
+        wx.getLocation({
+          type: 'gcj02',
+          success: (res) => {
+            const temp = {
+              longitude: res.longitude,
+              latitude: res.latitude,
+            }
+            this.getUserInfo();
+            this.$emit('setLocation', temp);
+          },
+          fail: () => {
+            // 展示没权限的 组件
+            this.show = true;
+          }
+        });
+      },
+      getUserInfo() {
+        wx.getUserInfo({
+          complete: ({userInfo}) => {
+            this.$emit('getUserInfo', userInfo);
+          },
+        });
+      },
       resetGetpermis() {
         wx.getSetting({
           success: (res) => {
@@ -38,9 +69,11 @@
             // 点击“确认”时打开设置页面
             if (res.confirm) {
               console.log('用户点击确认');
-              wx.openSetting({
+              this.show = false;
+              wx.openSetting({ // 当用户已经开启 A权限设置 则不会出现A权限是否提示弹框
                 success: () => {
-                  this.$emit('alertPermit');
+                  this.$emit('changePermit', true);
+                  this.locationPermis();
                 },
               });
             }
@@ -52,6 +85,7 @@
 </script>
 <style scoped type="text/scss" lang="scss">
   @import "../../static/scss/mixin.scss";
+
   .notLine {
     position: absolute;
     left: 0;

@@ -1,0 +1,43 @@
+<template>
+  <div :class="[paneClass,cname]" v-show="fxShow" @click="$emit('click',arguments[0])">
+    <icon :type="typeInfo" class="weui-flex__item" :size="40" v-if="iconShow"/>
+    <slot></slot>
+  </div>
+</template>
+<script>
+  export default {
+    props: {
+      cname: {
+        type: String,
+        default: '',
+      },
+      fxShow: {
+        type: Boolean,
+        default: true,
+      },
+      typeInfo: {
+        type: String,
+        default: '',
+      },
+      iconShow: {
+        type: Boolean,
+        default: true,
+      },
+    },
+    data() {
+      return {
+        paneClass: 'fixed',
+      };
+    },
+  };
+</script>
+<style type="text/scss" lang="scss">
+  @import "../../static/scss/mixin.scss";
+  /*组件css 在mpvue内没效果 所以写在这没效果*/
+  .fixed {
+    position: fixed;
+    right: rpx(30);
+    bottom: rpx(60);
+    z-index: 100;
+  }
+</style>

@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import App from './App';
+import store from './store'
 import MpvueRouterPath from 'mpvue-router-patch';
 import '../static/weui/css/weui.min.css';
 import Tools from './global';
 
 Vue.config.productionTip = false;
 App.mpType = 'app'
+Vue.prototype.$store = store
 Vue.use(MpvueRouterPath);
 Vue.use(Tools);
 const app = new Vue(App);
