@@ -26,7 +26,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   // cheap-module-eval-source-map is faster for development
   // devtool: '#cheap-module-eval-source-map',
-  devtool: '#source-map',
+  devtool: false,
   output: {
     path: config.build.assetsRoot,
     // filename: utils.assetsPath('js/[name].[chunkhash].js'),
@@ -60,7 +60,7 @@ module.exports = merge(baseWebpackConfig, {
           module.resource &&
           /\.js$/.test(module.resource) &&
           module.resource.indexOf('node_modules') >= 0
-        ) || count > 1
+        )
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
