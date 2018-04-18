@@ -66,9 +66,9 @@ $ npm run dev
 
 ### 设计流程图
 <p>
-  <img alt="" src="./screenshots/index.png" width="33%" />
-  <img alt="" src="./screenshots/permis.png" width="33%" />
-  <img alt="" src="./screenshots/main.png" width="33%" />
+  <img alt="" src="./screenshots/index.png"/>
+  <img alt="" src="./screenshots/permis.png"/>
+  <img alt="" src="./screenshots/main.png"/>
 </p>
 
 ### js部分
