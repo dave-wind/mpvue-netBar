@@ -1,7 +1,7 @@
 {
   "name": "network-bar",
   "version": "1.0.0",
-  "description": "mpvue for find network",
+  "description": "mpvue for find netbar",
   "author": "dave-wind",
   "private": true,
   "scripts": {
