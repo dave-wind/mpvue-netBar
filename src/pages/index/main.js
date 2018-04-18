@@ -9,6 +9,6 @@ app.$mount()
 
 export default {
   config: {
-    navigationBarTitleText: 'Search吧',
+    navigationBarTitleText: 'SearchBar',
   },
 };
