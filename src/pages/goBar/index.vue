@@ -6,17 +6,17 @@
         <div class="weui-cell__bd">{{item}}</div>
       </div>
     </div>
-    <fixed-btn :cname="fxClass" typeInfo="waiting" :iconShow="iconShow" @click="navigation">
+    <net-fixed :cname="fxClass" typeInfo="waiting" :iconShow="iconShow" @click="navigation">
       <img class="go" src="http://s1.axhome.com.cn/wechat/nv-icon.png" alt="">
-    </fixed-btn>
+    </net-fixed>
   </div>
 </template>
 <script>
-  import FixedBtn from '../../components/fixation';
+  import NetFixed from '../../components/net-fixed';
 
   export default {
     components: {
-      FixedBtn,
+      NetFixed,
     },
     data() {
       return {
@@ -66,11 +66,9 @@
   @import "../../../static/scss/mixin.scss";
 
   .navigation {
-    position: fixed;
-    right: rpx(30);
-    bottom: rpx(60);
     width: rpx(80);
     height: rpx(80);
+    z-index: 100;
     animation: scale 0.5s 0.5s infinite;
     img.go {
       display: block;

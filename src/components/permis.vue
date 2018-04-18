@@ -101,13 +101,11 @@
     width: 100%;
     text-align: center;
     margin-bottom: rpx(50);
+    image {
+      width: rpx(240);
+      height: rpx(103);
+    }
   }
-
-  .img-wrap image {
-    width: rpx(240);
-    height: rpx(103);
-  }
-
   .txt {
     width: 100%;
     text-align: center;

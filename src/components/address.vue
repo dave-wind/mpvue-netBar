@@ -10,12 +10,6 @@
 <script>
   import {mapGetters} from 'vuex';
   export default {
-    data () {
-      return {
-      }
-    },
-    mounted () {
-    },
     computed: {
       ...mapGetters({
         address: 'getAddress',
@@ -30,10 +24,6 @@
         return this.address.distance;
       }
     },
-    watch: {
-      'address': function (val) {
-      }
-    }
   }
 </script>
 <style scoped type="text/scss" lang="scss">

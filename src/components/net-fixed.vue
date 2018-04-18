@@ -26,15 +26,15 @@
     },
     data() {
       return {
-        paneClass: 'fixed',
+        paneClass: 'position',
       };
     },
   };
 </script>
-<style type="text/scss" lang="scss">
+<style scoped type="text/scss" lang="scss">
   @import "../../static/scss/mixin.scss";
-  /*组件css 在mpvue内没效果 所以写在这没效果*/
-  .fixed {
+
+  .position {
     position: fixed;
     right: rpx(30);
     bottom: rpx(60);

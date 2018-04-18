@@ -7,7 +7,7 @@
         :search="search">
       </net-map>
       <net-address></net-address>
-      <fixed-btn :cname="fxClass" typeInfo="info" :fxShow="fxShow" @click="goDetail"></fixed-btn>
+      <net-fixed :cname="fxClass" typeInfo="info" :fxShow="fxShow" @click="goDetail"></net-fixed>
     </div>
     <permission
       @changePermit="changePermit"
@@ -22,15 +22,15 @@
   import Permission from '../../components/permis';
   import NetMap from '../../components/net-map';
   import NetAddress from '../../components/address';
-  import FixedBtn from '../../components/fixation';
+  import NetFixed from '../../components/net-fixed';
   import {mapGetters} from 'vuex';
 
   export default {
     components: {
+      NetFixed,
       Permission,
       NetMap,
       NetAddress,
-      FixedBtn,
     },
     data() {
       return {
@@ -113,12 +113,5 @@
     100% {
       transform: scale(1);
     }
-  }
-  /*btn*/
-  .fixed {
-    position: fixed;
-    right: rpx(30);
-    bottom: rpx(60);
-    z-index: 100;
   }
 </style>
