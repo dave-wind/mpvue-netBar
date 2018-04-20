@@ -105,7 +105,7 @@ $ npm run dev
 ```
 
 ### 总结
-&nbsp;&nbsp;相对于mpvue 就是算踩坑了 里面有很多意想不到的问题的，对于该项目还是总结以下几点：
+&nbsp;&nbsp;相对于mpvue 就是算踩坑了 里面有很多意想不到的问题的，对于该项目还是总结以下几点:    
 1.在mpvue里尽量不要用小程序生命周期。    
 2.在mpvue里没有router每个页面需要配置main.js以及接口交互最好用flyio,如果对这几点深感洁癖的追求完美的可以用大神的插件:      
 * [mpvue-entry](https://github.com/F-loat/mpvue-entry) - 集中式页面配置，不再需要重复编辑各页面的 main.js 文件  
