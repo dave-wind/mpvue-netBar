@@ -11,7 +11,7 @@
 4.手机定位导航  
 emmmm, 我知道这段开门见山的话很拙 没事 感兴趣你继续往下瞅瞅~
 
-###项目入口
+### 项目入口
 <p>
   <img alt="" src="./screenshots/searchBar.jpg"/>
 </p>
@@ -110,8 +110,10 @@ $ npm run dev
 2.在mpvue里没有router每个页面需要配置main.js以及接口交互最好用flyio,如果对这几点深感洁癖的追求完美的可以用大神的插件:      
 * [mpvue-entry](https://github.com/F-loat/mpvue-entry) - 集中式页面配置，不再需要重复编辑各页面的 main.js 文件  
 * [mpvue-router-patch](https://github.com/F-loat/mpvue-router-patch) - 在 mpvue 中使用 vue-router 兼容的路由写法  
-* [fly](https://github.com/wendux/fly)支持所有JavaScript运行时请求转发和基于Promise的HTTP客户端  
-3.模块化思想很重要 写之前整理好    
-4.mpvue 数据data方面不能放过多数据 要把业务和组件抽离分开    
-5.真的意识到写好项目不难，但是写出一个可维护且高质量的代码真的很难。
-6.该项目目前是1.0版本, 默认只是查询附近网吧功能，实际上组件已经抽离出来 可通过父组件传值改变搜索的内容，后期还会逐步升级，敬请期待。
+* [fly](https://github.com/wendux/fly) - 支持所有JavaScript运行时请求转发和基于Promise的HTTP客户端    
+
+3.模块化思想很重要 写之前整理好  
+4.webpack 解析wx 需要配置，mpvue框架 组件化css 需要配置 等等都需要注意 有问题请看mpvue的Issues    
+5.mpvue 数据data方面不能放过多数据 要把业务和组件抽离分开    
+6.真的意识到写好项目不难，但是写出一个可维护且高质量的代码真的很难。
+7.该项目目前是1.0版本, 默认只是查询附近网吧功能，实际上组件已经抽离出来 可通过父组件传值改变搜索的内容，后期还会逐步升级，希望通过爬虫获取详情数据，敬请期待。
