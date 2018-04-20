@@ -11,6 +11,12 @@
 4.手机定位导航  
 emmmm, 我知道这段开门见山的话很拙 没事 感兴趣你继续往下瞅瞅~
 
+###项目入口
+<p>
+  <img alt="" src="./screenshots/searchBar.jpg"/>
+</p>
+
+
 ## 初始化
 
 ``` bash
