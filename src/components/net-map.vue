@@ -102,10 +102,12 @@
           });
         });
         this.markers = result;
-        this.initShowAddsByDis(result[0]);
+        this.initShowAddsByDis(result[0]).then(() => {
+          this.drawWalkingRoute();
+        });
       },
 //      初始化的展示最近的 网咖数据
-      initShowAddsByDis(val) {
+      async initShowAddsByDis(val) {
         const temp = {
           netName: val.name,
           address: val.address,
@@ -114,7 +116,6 @@
         this.$store.commit('SET_ADDRESS', temp);
         this.disLongitude = val.longitude;
         this.disLatitude = val.latitude;
-        this.drawWalkingRoute();
       },
       // 点击事件
       doMarkertap(e) {
