@@ -2,7 +2,7 @@
   <map id="map"
        :longitude="longitude"
        :latitude="latitude"
-       scale="14"
+       :scale="scale"
        :markers="markers"
        :polyline="polyline"
        @markertap="doMarkertap"
@@ -39,6 +39,7 @@
         markers: [],
         polyline: [],
         stepList: [],
+        scale: 15,
         // 目标地点 经纬度
         disLongitude: 0,
         disLatitude: 0,
@@ -61,11 +62,10 @@
         this.searchNetWork();
       },
       showUserInfo() {
-        if (typeof this.userInfo === 'string') {
-          this.tip(`${this.userInfo}你好`);
-        } else {
-          this.tip(`${this.userInfo.nickName}你好`);
-        }
+        this.tip(`${this.userInfo.nickName}你好`).then(() => {
+          this.tip('路线展示为最近的网咖');
+          this.scale = 17;
+        });
       },
       searchNetWork() {
         this.loading.show('Loading...');
@@ -76,6 +76,7 @@
             latitude: this.latitude,
           },
           success: (res) => {
+            console.log(res);
             this.loading.hide();
             // 根据返回的结果marker在地图上面
             const data = res.data;
@@ -113,6 +114,7 @@
         this.$store.commit('SET_ADDRESS', temp);
         this.disLongitude = val.longitude;
         this.disLatitude = val.latitude;
+        this.drawWalkingRoute();
       },
       // 点击事件
       doMarkertap(e) {

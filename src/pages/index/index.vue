@@ -60,7 +60,10 @@
         if (val) {
           this.$store.commit('SET_USER', val);
         } else {
-          this.$store.commit('SET_USER', '游客');
+          const temp = {
+            nickName: '游客'
+          }
+          this.$store.commit('SET_USER', temp);
         }
       },
       changePermit(val) {
