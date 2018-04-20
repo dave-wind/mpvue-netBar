@@ -55,6 +55,7 @@
               latitude: this.obj.wei,
               name: this.obj.netName,
               address: this.obj.address,
+              scale: 20,
             });
           },
         });

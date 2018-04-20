@@ -54,7 +54,6 @@
       setLocation(val) {
         this.longitude = val.longitude;
         this.latitude = val.latitude;
-        return this.longitude;
       },
       getUserInfo(val) {
         if (val) {

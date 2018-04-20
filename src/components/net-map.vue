@@ -12,7 +12,7 @@
 <script>
   import {mapGetters} from 'vuex';
 
-  const gdKey = 'cd17f895f7d70ef688f4bf600e067a8e';
+  const gdKey = 'ac2233f4c7b653b3b4cca74e72bd90bd';
   const qqKey = 'XCEBZ-MEE3F-XAZJN-NKBX7-HXLTS-BIF6J';
   const QQMapWX = require('../utils/map/qqmap-wx-jssdk.js');
   const amapFile = require('../utils/map/amap-wx.js');
@@ -63,9 +63,7 @@
       },
       showUserInfo() {
         this.tip(`${this.userInfo.nickName}你好`).then(() => {
-          this.tip('默认展示您最近的网咖').then(() => {
-            this.scale = 17;
-          })
+          this.tip('默认展示您最近的网咖');
         });
       },
       searchNetWork() {
@@ -170,6 +168,7 @@
               color: '#f39800',
               width: 6,
             });
+            this.scale = 17;
           },
         });
       },
