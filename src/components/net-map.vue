@@ -63,8 +63,9 @@
       },
       showUserInfo() {
         this.tip(`${this.userInfo.nickName}你好`).then(() => {
-          this.tip('路线展示为最近的网咖');
-          this.scale = 17;
+          this.tip('默认展示您最近的网咖').then(() => {
+            this.scale = 17;
+          })
         });
       },
       searchNetWork() {
@@ -76,7 +77,6 @@
             latitude: this.latitude,
           },
           success: (res) => {
-            console.log(res);
             this.loading.hide();
             // 根据返回的结果marker在地图上面
             const data = res.data;
