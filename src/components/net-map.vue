@@ -84,6 +84,7 @@
           },
           fail: () => {
             this.loading.hide();
+            this.tip('查无结果');
           },
         });
       },

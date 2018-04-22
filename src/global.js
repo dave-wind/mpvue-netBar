@@ -1,6 +1,7 @@
 /**
  * Created by dave on 2018/3/20.
  */
+
 const install = (Vue) => {
   Vue.prototype.locationPermis = () => {
     return new Promise((resolve, reject) => {

@@ -69,7 +69,7 @@
               wx.openSetting({ // 当用户已经开启 A权限设置 则不会出现A权限是否提示弹框
                 success: () => {
                   this.$emit('changePermit', true);
-                  this.locationPermis();
+                  this.init();
                 },
               });
             }
