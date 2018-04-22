@@ -6,8 +6,17 @@
         :latitude="latitude"
         :search="search">
       </net-map>
-      <net-address></net-address>
-      <net-fixed :cname="fxClass" typeInfo="info" :fxShow="fxShow" @click="goDetail"></net-fixed>
+      <net-address
+        :addrShow="fxShow"
+        @click="goDetail">
+      </net-address>
+      <net-fixed
+        :cname="fresh"
+        :fxShow="fxShow"
+        iconShow="false"
+        @click="reFresh">
+        <image class="img" src="/static/img/refresh.png"></image>
+      </net-fixed>
     </div>
     <permission
       @changePermit="changePermit"
@@ -38,8 +47,8 @@
         longitude: 0,
         latitude: 0,
         search: '网吧',
-        fxClass: 'goBar',
         fxShow: false,
+        fresh: 'fresh',
       };
     },
     computed: {
@@ -60,7 +69,7 @@
           this.$store.commit('SET_USER', val);
         } else {
           const temp = {
-            nickName: '游客'
+            nickName: '游客',
           }
           this.$store.commit('SET_USER', temp);
         }
@@ -82,6 +91,22 @@
           url: `../goBar/goBar?para=${JSON.stringify(para)}`,
         });
       },
+      reFresh() {
+        this.locationPermis().then((res) => {
+          if (res.longitude === this.longitude) {
+            this.tip('已是最新定位');
+          } else {
+            this.setLocation(res);
+          }
+          this.changeName();
+        });
+      },
+      changeName() {
+        this.fresh = 'fresh swing';
+        setTimeout(() => {
+          this.fresh = 'fresh';
+        }, 1000);
+      },
     },
     watch: {
       'userInfo': function () {
@@ -97,23 +122,58 @@
 <style type="text/scss" lang="scss">
   @import "../../../static/scss/mixin.scss";
 
+  .container {
+    position: relative;
+    box-sizing: border-box;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
   .txt {
     font-size: 11pt;
   }
 
-  .goBar {
-    animation: scale 0.5s 0.5s both;
+  .container {
+    .fresh {
+      position: absolute;
+      width: rpx(80);
+      height: rpx(80);
+      bottom: rpx(35);
+      font-size: 9pt;
+      text-align: center;
+      border-radius: 100%;
+      .img {
+        width: rpx(80);
+        height: rpx(80);
+      }
+    }
+    .swing {
+      transform-origin: top center;
+      animation-name: swing;
+      animation-duration: 1s;
+      animation-fill-mode: both
+    }
   }
+  //10n
+  @keyframes swing {
+    20% {
+      transform: rotate3d(0, 0, 1, 45deg);
+    }
 
-  @keyframes scale {
-    0% {
-      transform: scale(1);
+    40% {
+      transform: rotate3d(0, 0, 1, -30deg);
     }
-    50% {
-      transform: scale(1.5);
+
+    60% {
+      transform: rotate3d(0, 0, 1, 20deg);
     }
-    100% {
-      transform: scale(1);
+
+    80% {
+      transform: rotate3d(0, 0, 1, -10deg);
+    }
+
+    to {
+      transform: rotate3d(0, 0, 1, 0deg);
     }
   }
 </style>

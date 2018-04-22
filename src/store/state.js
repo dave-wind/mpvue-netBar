@@ -6,4 +6,4 @@ export default {
   address: {},
   routeInfo: {},
   stepList: [],
-}
+};

@@ -3,11 +3,6 @@ export default {
 };
 </script>
 <style>
-.container {
-  box-sizing: border-box;
-  min-height: 100vh;
-  overflow: hidden;
-}
 /* this rule will be remove */
 * {
   transition: width 2s;

@@ -23,25 +23,21 @@
         tempLocation: null,
       };
     },
-    mounted () {
-      this.locationPermis();
+    mounted() {
+      this.init();
     },
     methods: {
-      locationPermis() {
-        wx.getLocation({
-          type: 'gcj02',
-          success: (res) => {
-            const temp = {
-              longitude: res.longitude,
-              latitude: res.latitude,
-            }
-            this.getUserInfo();
-            this.$emit('setLocation', temp);
-          },
-          fail: () => {
-            // 展示没权限的 组件
-            this.show = true;
+      init() {
+        this.locationPermis().then((res) => {
+          const temp = {
+            longitude: res.longitude,
+            latitude: res.latitude,
           }
+          this.getUserInfo();
+          this.$emit('setLocation', temp);
+        }).catch(() => {
+          // 展示没权限的 组件
+          this.show = true;
         });
       },
       getUserInfo() {
@@ -106,6 +102,7 @@
       height: rpx(103);
     }
   }
+
   .txt {
     width: 100%;
     text-align: center;

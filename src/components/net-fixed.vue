@@ -37,7 +37,7 @@
   .position {
     position: fixed;
     right: rpx(30);
-    bottom: rpx(60);
+    bottom: rpx(40);
     z-index: 100;
   }
 </style>

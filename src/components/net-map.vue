@@ -53,12 +53,14 @@
     computed: {
       ...mapGetters({
         userInfo: 'getUserInfo',
+        address: 'getAddress',
       }),
     },
     methods: {
       async mapInitSDK() {
         this.amapInstance = new amapFile.AMapWX({key: gdKey});
         this.qqMapSdk = new QQMapWX({key: qqKey});
+        this.scale = 16;
         this.searchNetWork();
       },
       showUserInfo() {
@@ -89,6 +91,9 @@
         const result = [];
         array.forEach((item) => {
           result.push({
+            width: 30,
+            height: 30,
+            iconPath: "/static/img/marker.png",
             distance: item['_distance'],
             briefAddr: item.address,
             address: item.address,
@@ -98,6 +103,15 @@
             longitude: item.location.lng,
             name: item.title,
           });
+          result[0].callout = {
+            content: '离你最近',
+            color: '#ffffff',
+            fontSize: 12,
+            borderRadius: 10,
+            bgColor: '#1dd388',
+            padding: 5,
+            display: 'ALWAYS',
+          };
         });
         this.markers = result;
         this.initShowAddsByDis(result[0]).then(() => {
@@ -168,7 +182,6 @@
               color: '#f39800',
               width: 6,
             });
-            this.scale = 17;
           },
         });
       },
@@ -181,11 +194,17 @@
         this.$store.commit('SET_STEPLIST', this.stepList);
       },
     },
+    watch: {
+      'longitude': function () {
+        this.searchNetWork();
+      },
+    },
   };
 </script>
 <style>
   #map {
     width: 100%;
-    height: calc(100vh - 175rpx);
+    height: calc(100vh - 180rpx);
+    transform: translateZ(-100px);
   }
 </style>
