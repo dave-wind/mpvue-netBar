@@ -1,7 +1,9 @@
 <template>
-  <div :class="[paneClass,cname]" v-show="fxShow" @click="$emit('click',arguments[0])">
-    <icon :type="typeInfo" class="weui-flex__item" :size="40" v-if="iconShow"/>
-    <slot></slot>
+  <div>
+    <div :class="[paneClass,cname]" v-show="fxShow" @click="$emit('click',arguments[0])">
+      <icon :type="typeInfo" class="weui-flex__item" :size="40" v-if="iconShow"/>
+      <slot></slot>
+    </div>
   </div>
 </template>
 <script>

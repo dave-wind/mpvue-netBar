@@ -6,7 +6,11 @@
         <div class="weui-cell__bd">{{item}}</div>
       </div>
     </div>
-    <net-fixed :cname="fxClass" :iconShow="iconShow" @click="navigation">
+    <net-fixed
+      :cname="fxClass"
+      iconShow="false"
+      :iconShow="iconShow"
+      @click="navigation">
       <img class="go" src="http://s1.axhome.com.cn/wechat/nv-icon.png" alt="">
     </net-fixed>
   </div>

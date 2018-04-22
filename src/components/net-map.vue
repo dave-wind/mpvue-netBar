@@ -47,6 +47,7 @@
     },
     mounted() {
       this.mapInitSDK().then(() => {
+        this.scale = 16;
         this.showUserInfo();
       });
     },
@@ -60,7 +61,6 @@
       async mapInitSDK() {
         this.amapInstance = new amapFile.AMapWX({key: gdKey});
         this.qqMapSdk = new QQMapWX({key: qqKey});
-        this.scale = 16;
         this.searchNetWork();
       },
       showUserInfo() {
