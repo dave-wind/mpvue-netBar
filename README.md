@@ -13,7 +13,7 @@ emmmm, 我知道这段开门见山的话很拙 没事 感兴趣你继续往下�
 
 ### 项目入口
 <p>
-  <img alt="" src="./screenshots/searchBar.jpg"/>
+  <img alt="" src="https://user-images.githubusercontent.com/28003460/191257495-c40cfa4d-3e47-4132-b820-ef2becadc380.jpg"/>
 </p>
 
 
